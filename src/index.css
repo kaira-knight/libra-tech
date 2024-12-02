@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Ensure FullCalendar is fully responsive */
+.fc {
+  max-width: 100%;
+  height: 100% !important;
+}
+
+.fc-daygrid-day {
+  min-height: 80px;
+}
+
+@media screen and (max-width: 600px) {
+  .fc-toolbar-title {
+    font-size: 1.2em;
+  }
+}
+

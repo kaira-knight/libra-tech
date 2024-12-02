@@ -2,33 +2,40 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Box } from '@mui/material';
 import Header from './components/Header';
-import Sidebar from './components/Sidebar';
+import SideViewBar from './components/Sidebar';
 import Home from './pages/Home';
 import Books from './pages/Books';
 import SeatBooking from './pages/SeatBooking';
-import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
-import { Container } from '@mui/material';
+import Notifications from './pages/Notifications';
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <div style={{ display: 'flex' }}>
-        <Sidebar />
-        <Container style={{ flex: 1 }}>
+      <Box sx={{ display: 'flex' }}>
+        {/* Sidebar is always visible */}
+        <SideViewBar />
+
+        <Box sx={{ flexGrow: 1 }}>
+          {/* Header */}
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/books" element={<Books />} />
-            <Route path="/seat-booking" element={<SeatBooking />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </Container>
-      </div>
+
+          {/* Main Content */}
+          <Box sx={{ padding: 3 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/books" element={<Books />} />
+              <Route path="/seat-booking" element={<SeatBooking />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/notifications" element={<Notifications />} />
+            </Routes>
+          </Box>
+        </Box>
+      </Box>
     </Router>
   );
-}
+};
 
 export default App;
