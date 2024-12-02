@@ -1,14 +1,44 @@
-// Copyright 2024 TECH
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     https://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// File: src/pages/Profile.js
 
+import React from 'react';
+import { Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
+
+const Profile = () => {
+  const user = {
+    name: "John Doe",
+    membership: "Premium",
+    borrowedBooks: [
+      { title: "The Great Gatsby", dueDate: "2024-12-10" },
+      { title: "Moby Dick", dueDate: "2024-12-15" },
+    ],
+  };
+
+  return (
+    <div>
+      <Typography variant="h4" gutterBottom>
+        Profile
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Name: {user.name}
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Membership: {user.membership}
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        Borrowed Books
+      </Typography>
+      <List>
+        {user.borrowedBooks.map((book, index) => (
+          <React.Fragment key={index}>
+            <ListItem>
+              <ListItemText primary={book.title} secondary={`Due Date: ${book.dueDate}`} />
+            </ListItem>
+            {index < user.borrowedBooks.length - 1 && <Divider />}
+          </React.Fragment>
+        ))}
+      </List>
+    </div>
+  );
+};
+
+export default Profile;

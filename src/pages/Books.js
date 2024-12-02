@@ -1,14 +1,37 @@
-// Copyright 2024 TECH
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     https://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// File: src/pages/Books.js
 
+import React, { useState } from 'react';
+import { Grid, Typography, Button } from '@mui/material';
+import BookCard from '../components/BookCard';
+
+const Books = () => {
+  const [books, setBooks] = useState([
+    { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', isAvailable: true },
+    { title: '1984', author: 'George Orwell', isAvailable: false },
+    { title: 'Moby Dick', author: 'Herman Melville', isAvailable: true },
+  ]);
+
+  const handleRequest = (book) => {
+    alert(`Requested addition for: ${book.title}`);
+  };
+
+  return (
+    <div>
+      <Typography variant="h4" gutterBottom>
+        Library Books
+      </Typography>
+      <Grid container spacing={3}>
+        {books.map((book, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <BookCard
+              book={book}
+              onRequest={() => handleRequest(book)}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
+};
+
+export default Books;
