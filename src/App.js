@@ -1,37 +1,74 @@
-// File: src/App.js
-
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Box } from '@mui/material';
-import Header from './components/Header';
-import SideViewBar from './components/Sidebar';
-import Home from './pages/Home';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Box, CssBaseline } from '@mui/material';
 import Books from './pages/Books';
 import SeatBooking from './pages/SeatBooking';
-import Profile from './pages/Profile';
-import Notifications from './pages/Notifications';
+import Notifications from './components/Notifications';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import HomePage from './pages/HomePage';
 
 const App = () => {
+  const [notifications, setNotifications] = useState([]);
+
+  // Add a new notification
+  const addNotification = (title, message) => {
+    setNotifications((prev) => [
+      ...prev,
+      { id: prev.length + 1, title, message },
+    ]);
+  };
+
+  // Remove a notification
+  const removeNotification = (id) => {
+    setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+  };
+
   return (
     <Router>
-      <Box sx={{ display: 'flex' }}>
-        {/* Sidebar is always visible */}
-        <SideViewBar />
-
-        <Box sx={{ flexGrow: 1 }}>
-          {/* Header */}
+      <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+        {/* Sidebar */}
+        <Sidebar />
+        
+        {/* Main content */}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            backgroundColor: '#f5f5f5', // Light background for content
+            padding: 3,
+            overflow: 'auto',
+          }}
+        >
+          <CssBaseline />
           <Header />
+          <Routes>
+            {/* Home Page */}
+            <Route path="/" element={<HomePage />} />
 
-          {/* Main Content */}
-          <Box sx={{ padding: 3 }}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/books" element={<Books />} />
-              <Route path="/seat-booking" element={<SeatBooking />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/notifications" element={<Notifications />} />
-            </Routes>
-          </Box>
+            {/* Books Page */}
+            <Route
+              path="/books"
+              element={<Books addNotification={addNotification} />}
+            />
+
+            {/* Seat Booking Page */}
+            <Route
+              path="/seat-booking"
+              element={<SeatBooking addNotification={addNotification} />}
+            />
+
+            {/* Notifications Page */}
+            <Route
+              path="/notifications"
+              element={
+                <Notifications
+                  notifications={notifications}
+                  removeNotification={removeNotification}
+                />
+              }
+            />
+          </Routes>
         </Box>
       </Box>
     </Router>
