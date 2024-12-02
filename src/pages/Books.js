@@ -1,7 +1,7 @@
 // File: src/pages/Books.js
 
 import React, { useState } from 'react';
-import { Grid, Typography, Button } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import BookCard from '../components/BookCard';
 
 const Books = () => {
@@ -23,10 +23,7 @@ const Books = () => {
       <Grid container spacing={3}>
         {books.map((book, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <BookCard
-              book={book}
-              onRequest={() => handleRequest(book)}
-            />
+            <BookCard book={book} onRequest={() => handleRequest(book)} />
           </Grid>
         ))}
       </Grid>

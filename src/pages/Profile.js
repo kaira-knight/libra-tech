@@ -1,7 +1,7 @@
 // File: src/pages/Profile.js
 
 import React from 'react';
-import { Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
+import { Typography, List, ListItem, Divider } from '@mui/material';
 
 const Profile = () => {
   const user = {
@@ -18,22 +18,20 @@ const Profile = () => {
       <Typography variant="h4" gutterBottom>
         Profile
       </Typography>
-      <Typography variant="h6" gutterBottom>
-        Name: {user.name}
-      </Typography>
-      <Typography variant="h6" gutterBottom>
-        Membership: {user.membership}
-      </Typography>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="body1">Name: {user.name}</Typography>
+      <Typography variant="body1">Membership: {user.membership}</Typography>
+      <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
         Borrowed Books
       </Typography>
       <List>
-        {user.borrowedBooks.map((book, index) => (
-          <React.Fragment key={index}>
+        {user.borrowedBooks.map((book, idx) => (
+          <React.Fragment key={idx}>
             <ListItem>
-              <ListItemText primary={book.title} secondary={`Due Date: ${book.dueDate}`} />
+              <Typography>
+                {book.title} - Due: {book.dueDate}
+              </Typography>
             </ListItem>
-            {index < user.borrowedBooks.length - 1 && <Divider />}
+            {idx < user.borrowedBooks.length - 1 && <Divider />}
           </React.Fragment>
         ))}
       </List>

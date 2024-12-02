@@ -1,3 +1,5 @@
+// File: src/components/Calendar.js
+
 import React from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -10,13 +12,12 @@ const Calendar = ({ onDateSelect }) => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ marginTop: '20px' }}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        editable={false}
-        selectable={true}
         dateClick={handleDateClick}
+        selectable={true}
       />
     </div>
   );

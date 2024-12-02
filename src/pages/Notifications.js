@@ -1,13 +1,13 @@
 // File: src/pages/Notifications.js
 
 import React from 'react';
-import { Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
+import { Typography, List, ListItem, Divider } from '@mui/material';
 
 const Notifications = () => {
   const notifications = [
-    "Book '1984' is now available for borrowing.",
-    "Return deadline for 'The Great Gatsby' is tomorrow.",
-    "You have successfully borrowed 'Moby Dick'.",
+    "Return 'The Great Gatsby' by Dec 10th.",
+    "'1984' is now available!",
+    "Reminder: Seat Booking for Dec 4, 10 AM confirmed.",
   ];
 
   return (
@@ -16,12 +16,12 @@ const Notifications = () => {
         Notifications
       </Typography>
       <List>
-        {notifications.map((notification, index) => (
-          <React.Fragment key={index}>
+        {notifications.map((note, idx) => (
+          <React.Fragment key={idx}>
             <ListItem>
-              <ListItemText primary={notification} />
+              <Typography variant="body1">{note}</Typography>
             </ListItem>
-            {index < notifications.length - 1 && <Divider />}
+            {idx < notifications.length - 1 && <Divider />}
           </React.Fragment>
         ))}
       </List>

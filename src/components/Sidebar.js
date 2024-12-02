@@ -22,6 +22,7 @@ const Sidebar = () => {
         <ListItem button component={Link} to="/notifications">
           <ListItemText primary="Notifications" />
         </ListItem>
+        <Divider />
         <ListItem button component={Link} to="/profile">
           <ListItemText primary="Profile" />
         </ListItem>
