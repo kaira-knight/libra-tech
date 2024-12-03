@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import {
   Typography,
-  List,
-  ListItem,
-  Divider,
   Button,
   Box,
   Avatar,
@@ -16,6 +13,9 @@ import {
   Alert,
   Card,
   CardContent,
+  List,
+  ListItem,
+  Divider
 } from '@mui/material';
 import { useSpring, animated } from 'react-spring';
 
@@ -27,7 +27,7 @@ const Profile = () => {
     membership: "Premium",
     username: "team_realistic",
     avatar: "https://upload.wikimedia.org/wikipedia/commons/2/20/SITBihar.jpg",
-    role: "user", // Could be 'user' or 'staff'
+    role: "staff", // Change this to 'user' for user profile
     department: "Library Management", // Applicable for staff
     borrowedBooks: [
       { title: "The Great Gatsby", dueDate: "2024-12-10" },
@@ -130,6 +130,7 @@ const Profile = () => {
           </CardContent>
         </Card>
 
+        {/* Borrowed Books Section (Only for 'user' role) */}
         {user.role === 'user' && (
           <Box mt={8}>
             <Typography variant="h6" gutterBottom>

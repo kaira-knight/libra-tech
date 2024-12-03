@@ -15,6 +15,7 @@ import BookInventory from './pages/BookInventory'; // For staff
 import Login from './pages/Login'; // Starting point
 import Profile from './pages/Profile'; // Profile Page
 
+
 const App = () => {
   const [notifications, setNotifications] = useState([]);
   const [role, setRole] = useState(localStorage.getItem('role') || null);
