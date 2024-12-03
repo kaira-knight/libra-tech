@@ -1,4 +1,4 @@
-// File: src/components/Sidebar.js
+
 
 import React from 'react';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, Box, Typography } from '@mui/material';
@@ -8,17 +8,31 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { useSpring, animated } from 'react-spring';
 
-const menuItems = [
-  { label: 'Home', icon: <HomeIcon />, path: '/' },
-  { label: 'Books', icon: <MenuBookIcon />, path: '/books' },
-  { label: 'Seat Booking', icon: <EventSeatIcon />, path: '/seat-booking' },
-  { label: 'Profile', icon: <AccountCircleIcon />, path: '/profile' },
-  { label: 'Notifications', icon: <NotificationsIcon />, path: '/notifications' },
-];
-
 const SideViewBar = () => {
+  const role = localStorage.getItem('role'); // Retrieve the role from localStorage
+
+  // Define role-based menu items
+  const menuItems = role === 'user'
+    ? [
+        { label: 'Home', icon: <HomeIcon />, path: '/home' },
+        { label: 'Books', icon: <MenuBookIcon />, path: '/books' },
+        { label: 'Seat Booking', icon: <EventSeatIcon />, path: '/seat-booking' },
+        { label: 'Notifications', icon: <NotificationsIcon />, path: '/notifications' },
+        { label: 'Profile', icon: <AccountCircleIcon />, path: '/profile' },
+      ]
+    : [
+        { label: 'Dashboard', icon: <DashboardIcon />, path: '/staff/dashboard' },
+        { label: 'Borrowing Requests', icon: <AssignmentIcon />, path: '/borrowing-requests' },
+        { label: 'Returning Updates', icon: <AssignmentIcon />, path: '/returning-updates' },
+        { label: 'Book Inventory', icon: <LibraryBooksIcon />, path: '/book-inventory' },
+        { label: 'Profile', icon: <AccountCircleIcon />, path: '/profile' },
+      ];
+
   const springProps = useSpring({
     from: { transform: 'translateX(-100%)' },
     to: { transform: 'translateX(0)' },
@@ -52,7 +66,7 @@ const SideViewBar = () => {
           }}
         >
           <Typography variant="h6" color="#1f2937" fontWeight="bold">
-            My Library
+            {role === 'user' ? 'User Portal' : 'Staff Portal'}
           </Typography>
         </Box>
 

@@ -6,8 +6,9 @@ import { Search as SearchIcon, Notifications as NotificationsIcon, AccountCircle
 import { Link, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
-const Header = () => {
+const Header = ({ onLogout }) => {
   const location = useLocation();
+  const role = localStorage.getItem('role'); // Retrieve user role
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [notificationsCount] = useState(5); // Example: Mock notification count
@@ -30,19 +31,34 @@ const Header = () => {
     setSearchTerm("");
   };
 
-  const navigationLinks = [
-    { label: "Home", path: "/" },
-    { label: "Books", path: "/books" },
-    { label: "Seat Booking", path: "/seat-booking" },
-    { label: "Profile", path: "/profile" },
-    { label: "Notifications", path: "/notifications" },
-  ];
+  // Role-based navigation links
+  const navigationLinks =
+    role === 'user'
+      ? [
+          { label: "Home", path: "/home" },
+          { label: "Books", path: "/books" },
+          { label: "Seat Booking", path: "/seat-booking" },
+          { label: "Notifications", path: "/notifications" },
+          { label: "Profile", path: "/profile" },
+        ]
+      : [
+          { label: "Dashboard", path: "/staff/dashboard" },
+          { label: "Borrowing Requests", path: "/borrowing-requests" },
+          { label: "Returning Updates", path: "/returning-updates" },
+          { label: "Book Inventory", path: "/book-inventory" },
+          { label: "Profile", path: "/profile" },
+        ];
 
   return (
     <AppBar position="static">
       <Toolbar>
         {/* App Title */}
-        <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+        <Typography
+          variant="h6"
+          component={Link}
+          to={role === 'user' ? "/home" : "/staff/dashboard"}
+          sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
+        >
           LibraTech
         </Typography>
 
@@ -66,11 +82,13 @@ const Header = () => {
         </form>
 
         {/* Notifications Icon */}
-        <IconButton color="inherit" component={Link} to="/notifications">
-          <Badge badgeContent={notificationsCount} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+        {role === 'user' && (
+          <IconButton color="inherit" component={Link} to="/notifications">
+            <Badge badgeContent={notificationsCount} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        )}
 
         {/* Profile Dropdown */}
         <IconButton
@@ -91,7 +109,14 @@ const Header = () => {
           <MenuItem component={Link} to="/profile" onClick={handleMenuClose}>
             Profile
           </MenuItem>
-          <MenuItem onClick={() => alert("Logged out!")}>Logout</MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleMenuClose();
+              onLogout(); // Logout callback
+            }}
+          >
+            Logout
+          </MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

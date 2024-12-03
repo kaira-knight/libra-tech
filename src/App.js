@@ -7,16 +7,19 @@ import Notifications from './components/Notifications';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import HomePage from './pages/HomePage';
-import Profile from './pages/Profile'; // Import the Profile component
-import Login from './pages/Login'; // Import the Login page
-import BookInventory from './pages/BookInventory'; // Import the Book Inventory page for staff
+import UserDashboard from './pages/UserDashboard'; // For customers
+import StaffDashboard from './pages/StaffDashboard'; // For staff
+import BorrowingRequests from './pages/BorrowingRequests'; // For staff
+import ReturningUpdates from './pages/ReturningUpdates'; // For staff
+import BookInventory from './pages/BookInventory'; // For staff
+import Login from './pages/Login'; // Starting point
 
 const App = () => {
   const [notifications, setNotifications] = useState([]);
   const [role, setRole] = useState(localStorage.getItem('role') || null);
 
   useEffect(() => {
-    // Get the user role from localStorage
+    // Fetch the stored role on app load
     const storedRole = localStorage.getItem('role');
     setRole(storedRole);
   }, []);
@@ -43,69 +46,62 @@ const App = () => {
   return (
     <Router>
       <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-        {/* Only show Sidebar if the user is logged in */}
+        {/* Show Sidebar for logged-in users and staff */}
         {role && <Sidebar />}
 
-        {/* Main content */}
+        {/* Main Content */}
         <Box
           component="main"
           sx={{
             flexGrow: 1,
-            backgroundColor: '#f5f5f5', // Light background for content
+            backgroundColor: '#f5f5f5',
             padding: 3,
             overflow: 'auto',
           }}
         >
           <CssBaseline />
-          {/* Header component only visible for users and staff */}
+          {/* Header component for users and staff */}
           {role && <Header onLogout={handleLogout} />}
 
-          {/* Routing for different pages */}
           <Routes>
-            {/* If no role is set (i.e., not logged in), show the login page */}
+            {/* Default: Login page if no role is set */}
             {!role ? (
               <Route path="/" element={<Login />} />
             ) : (
-              // If logged in as user or staff, show the app content
-              <Route path="/" element={<Navigate to={role === 'staff' ? '/staff/dashboard' : '/home'} />} />
+              <Route
+                path="/"
+                element={<Navigate to={role === 'user' ? '/user-dashboard' : '/staff-dashboard'} />}
+              />
             )}
 
-            {/* Home Page - Only accessible for users */}
-            <Route path="/home" element={role === 'user' ? <HomePage /> : <Navigate to="/" />} />
+            {/* Customer Routes */}
+            {role === 'user' && (
+              <>
+                <Route path="/user-dashboard" element={<UserDashboard />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/books" element={<Books addNotification={addNotification} />} />
+                <Route path="/seat-booking" element={<SeatBooking addNotification={addNotification} />} />
+                <Route
+                  path="/notifications"
+                  element={
+                    <Notifications notifications={notifications} removeNotification={removeNotification} />
+                  }
+                />
+              </>
+            )}
 
-            {/* Books Page - Only accessible for users */}
-            <Route
-              path="/books"
-              element={role === 'user' ? <Books addNotification={addNotification} /> : <Navigate to="/" />}
-            />
+            {/* Staff Routes */}
+            {role === 'staff' && (
+              <>
+                <Route path="/staff-dashboard" element={<StaffDashboard />} />
+                <Route path="/borrowing-requests" element={<BorrowingRequests />} />
+                <Route path="/returning-updates" element={<ReturningUpdates />} />
+                <Route path="/book-inventory" element={<BookInventory />} />
+              </>
+            )}
 
-            {/* Seat Booking Page - Only accessible for users */}
-            <Route
-              path="/seat-booking"
-              element={role === 'user' ? <SeatBooking addNotification={addNotification} /> : <Navigate to="/" />}
-            />
-
-            {/* Notifications Page - Only accessible for users */}
-            <Route
-              path="/notifications"
-              element={
-                role === 'user' ? (
-                  <Notifications notifications={notifications} removeNotification={removeNotification} />
-                ) : (
-                  <Navigate to="/" />
-                )
-              }
-            />
-
-            {/* Profile Page - Only accessible for users */}
-            <Route path="/profile" element={role === 'user' ? <Profile /> : <Navigate to="/" />} />
-
-            {/* Staff Dashboard and Book Inventory - Only accessible for staff */}
-            <Route
-              path="/staff/dashboard"
-              element={role === 'staff' ? <BookInventory /> : <Navigate to="/" />}
-            />
-
+            {/* Catch-all: Redirect to login */}
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Box>
       </Box>
