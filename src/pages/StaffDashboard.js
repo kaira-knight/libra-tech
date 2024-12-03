@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Typography, Button, Grid, Card, CardContent, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Typography, Button, Grid, Card, CardContent, Box, Snackbar, Alert } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 
@@ -11,6 +11,14 @@ const StaffDashboard = () => {
     from: { opacity: 0 },
     config: { duration: 500 },
   });
+
+  // Snackbar notification state
+  const [notification, setNotification] = useState({ open: false, message: '', severity: '' });
+
+  // Function to trigger notification
+  const showNotification = (message, severity) => {
+    setNotification({ open: true, message, severity });
+  };
 
   return (
     <Container>
@@ -40,8 +48,9 @@ const StaffDashboard = () => {
                     color="primary"
                     fullWidth
                     component={Link}
-                    to="/borrowing-requests"
+                    to="/staff/borrowing-requests"
                     sx={{ mt: 2 }}
+                    onClick={() => showNotification('Navigating to Borrowing Requests', 'info')}
                   >
                     View Requests
                   </Button>
@@ -64,8 +73,9 @@ const StaffDashboard = () => {
                     color="primary"
                     fullWidth
                     component={Link}
-                    to="/returning-updates"
+                    to="/staff/returning-updates"
                     sx={{ mt: 2 }}
+                    onClick={() => showNotification('Navigating to Returning Updates', 'info')}
                   >
                     View Updates
                   </Button>
@@ -88,10 +98,61 @@ const StaffDashboard = () => {
                     color="primary"
                     fullWidth
                     component={Link}
-                    to="/book-inventory"
+                    to="/staff/book-inventory"
                     sx={{ mt: 2 }}
+                    onClick={() => showNotification('Navigating to Book Inventory', 'info')}
                   >
                     Manage Inventory
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Seat Bookings Card */}
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
+                <CardContent>
+                  <Typography variant="h6" color="primary" gutterBottom>
+                    View Seat Bookings
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" paragraph>
+                    Check and manage seat booking requests for users.
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    component={Link}
+                    to="/staff/seat-bookings"
+                    sx={{ mt: 2 }}
+                    onClick={() => showNotification('Navigating to Seat Bookings', 'info')}
+                  >
+                    View Bookings
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Create Usernames & Passwords Card */}
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
+                <CardContent>
+                  <Typography variant="h6" color="primary" gutterBottom>
+                    Create Usernames & Passwords
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" paragraph>
+                    Create new usernames and passwords for users and staff.
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    component={Link}
+                    to="/admin/create-user"
+                    sx={{ mt: 2 }}
+                    onClick={() => showNotification('Navigating to Create Users', 'info')}
+                  >
+                    Create Users
                   </Button>
                 </CardContent>
               </Card>
@@ -99,6 +160,15 @@ const StaffDashboard = () => {
           </Grid>
         </Box>
       </animated.div>
+
+      {/* Snackbar for Notifications */}
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={3000}
+        onClose={() => setNotification({ ...notification, open: false })}
+      >
+        <Alert severity={notification.severity}>{notification.message}</Alert>
+      </Snackbar>
     </Container>
   );
 };
