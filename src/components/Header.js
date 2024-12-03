@@ -1,8 +1,21 @@
 // File: src/components/Header.js
 
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Badge, InputBase } from '@mui/material';
-import { Search as SearchIcon, Notifications as NotificationsIcon, AccountCircle } from '@mui/icons-material';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Badge,
+  InputBase,
+} from '@mui/material';
+import {
+  Search as SearchIcon,
+  Notifications as NotificationsIcon,
+  AccountCircle,
+} from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -27,6 +40,7 @@ const Header = ({ onLogout }) => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
+    // For now, trigger an alert; you can replace this with navigation or API integration
     alert(`Searching for: ${searchTerm}`);
     setSearchTerm("");
   };
@@ -63,7 +77,10 @@ const Header = ({ onLogout }) => {
         </Typography>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearchSubmit} style={{ display: 'flex', alignItems: 'center', marginRight: '20px' }}>
+        <form
+          onSubmit={handleSearchSubmit}
+          style={{ display: 'flex', alignItems: 'center', marginRight: '20px' }}
+        >
           <InputBase
             placeholder="Search…"
             value={searchTerm}

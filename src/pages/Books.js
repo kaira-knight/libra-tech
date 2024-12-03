@@ -1,11 +1,10 @@
-// File: src/pages/Books.js
-
 import React, { useState } from 'react';
 import { Container, Grid, Typography, Snackbar, Alert, Box } from '@mui/material';
 import BookCard from '../components/BookCard';
 
 const Books = ({ addNotification }) => {
   const [books, setBooks] = useState([
+    // Add books with genres
     {
       id: 1,
       title: 'The Great Gatsby',
@@ -13,6 +12,7 @@ const Books = ({ addNotification }) => {
       isbn: '9780743273565',
       copiesAvailable: 3,
       cover: 'https://covers.openlibrary.org/b/id/8238696-L.jpg',
+      genre: 'Fiction',
     },
     {
       id: 2,
@@ -21,6 +21,7 @@ const Books = ({ addNotification }) => {
       isbn: '9780451524935',
       copiesAvailable: 5,
       cover: 'https://covers.openlibrary.org/b/id/8225262-L.jpg',
+      genre: 'Dystopian',
     },
     {
       id: 3,
@@ -29,6 +30,7 @@ const Books = ({ addNotification }) => {
       isbn: '9780061120084',
       copiesAvailable: 2,
       cover: 'https://covers.openlibrary.org/b/id/8225866-L.jpg',
+      genre: 'Classics',
     },
     {
       id: 4,
@@ -37,6 +39,7 @@ const Books = ({ addNotification }) => {
       isbn: '9781503290563',
       copiesAvailable: 4,
       cover: 'https://covers.openlibrary.org/b/id/8181370-L.jpg',
+      genre: 'Classics',
     },
     {
       id: 5,
@@ -45,6 +48,7 @@ const Books = ({ addNotification }) => {
       isbn: '9781503280786',
       copiesAvailable: 6,
       cover: 'https://covers.openlibrary.org/b/id/8235189-L.jpg',
+      genre: 'Classics',
     },
     {
       id: 6,
@@ -53,6 +57,7 @@ const Books = ({ addNotification }) => {
       isbn: '9780198800545',
       copiesAvailable: 7,
       cover: 'https://covers.openlibrary.org/b/id/8290935-L.jpg',
+      genre: 'Classics',
     },
     {
       id: 7,
@@ -61,6 +66,7 @@ const Books = ({ addNotification }) => {
       isbn: '9780316769488',
       copiesAvailable: 3,
       cover: 'https://covers.openlibrary.org/b/id/8262409-L.jpg',
+      genre: 'Fiction',
     },
     {
       id: 8,
@@ -69,6 +75,7 @@ const Books = ({ addNotification }) => {
       isbn: '9780345339683',
       copiesAvailable: 5,
       cover: 'https://covers.openlibrary.org/b/id/8271425-L.jpg',
+      genre: 'Fantasy',
     },
     {
       id: 9,
@@ -77,8 +84,9 @@ const Books = ({ addNotification }) => {
       isbn: '9780062315007',
       copiesAvailable: 8,
       cover: 'https://covers.openlibrary.org/b/id/8312872-L.jpg',
+      genre: 'Adventure',
     },
-    {
+     {
       id: 10,
       title: 'The Hunger Games',
       author: 'Suzanne Collins',
@@ -314,18 +322,36 @@ const Books = ({ addNotification }) => {
     }
   };
 
+  // Group books by genre
+  const groupedBooks = books.reduce((acc, book) => {
+    if (!acc[book.genre]) {
+      acc[book.genre] = [];
+    }
+    acc[book.genre].push(book);
+    return acc;
+  }, {});
+
   return (
     <Container>
       <Typography variant="h4" gutterBottom sx={{ marginTop: '20px' }}>
         Library Books
       </Typography>
-      <Grid container spacing={3}>
-        {books.map((book) => (
-          <Grid item xs={12} sm={6} md={4} key={book.id}>
-            <BookCard book={book} onAction={handleAction} />
+      
+      {/* Loop through each genre */}
+      {Object.keys(groupedBooks).map((genre) => (
+        <Box key={genre} sx={{ marginBottom: '40px' }}>
+          <Typography variant="h5" sx={{ marginBottom: '20px' }}>
+            {genre}
+          </Typography>
+          <Grid container spacing={3}>
+            {groupedBooks[genre].map((book) => (
+              <Grid item xs={12} sm={6} md={4} key={book.id}>
+                <BookCard book={book} onAction={handleAction} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </Box>
+      ))}
 
       {/* Notification Snackbar */}
       <Snackbar
@@ -345,4 +371,3 @@ const Books = ({ addNotification }) => {
 };
 
 export default Books;
-
