@@ -21,7 +21,8 @@ const Login = () => {
       // Successful login
       localStorage.setItem('role', selectedRole);
       localStorage.setItem('username', username); // Optionally store username
-      navigate(selectedRole === "user" ? "/home" : "/staff/dashboard");
+      console.log("Navigating to:", selectedRole === "user" ? "/home" : "/staff/dashboard");
+      window.location.replace('/home');
     } else {
       // Invalid login attempt
       setError("Invalid username or password. Please try again.");
