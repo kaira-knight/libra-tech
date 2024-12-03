@@ -14,6 +14,7 @@ const Login = () => {
     user: { username: "customer1", password: "password123" },
         user: { username: "customer", password: "password" },
     staff: { username: "staff1", password: "admin123" },
+        staff: { username: "staff1", password: "admin123" },
   };
 
   const handleLogin = (selectedRole) => {
