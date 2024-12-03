@@ -12,6 +12,7 @@ const Login = () => {
   // Dummy credentials for user and staff
   const credentials = {
     user: { username: "customer1", password: "password123" },
+        user: { username: "customer", password: "password" },
     staff: { username: "staff1", password: "admin123" },
   };
 
