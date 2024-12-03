@@ -9,6 +9,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import PersonAddIcon from '@mui/icons-material/PersonAdd'; // Added for User Creation
 
 const SideViewBar = () => {
   const role = localStorage.getItem('role'); // Retrieve the role from localStorage
@@ -27,6 +28,7 @@ const SideViewBar = () => {
         { label: 'Borrowing Requests', icon: <AssignmentIcon />, path: '/borrowing-requests' },
         { label: 'Returning Updates', icon: <AssignmentIcon />, path: '/returning-updates' },
         { label: 'Book Inventory', icon: <LibraryBooksIcon />, path: '/book-inventory' },
+        { label: 'Create Users', icon: <PersonAddIcon />, path: '/user-creation' }, // New menu item for staff
         { label: 'Profile', icon: <AccountCircleIcon />, path: '/profile' },
       ];
 

@@ -14,7 +14,7 @@ import ReturningUpdates from './pages/ReturningUpdates'; // For staff
 import BookInventory from './pages/BookInventory'; // For staff
 import Login from './pages/Login'; // Starting point
 import Profile from './pages/Profile'; // Profile Page
-
+import UserCreation from './pages/UserCreation'; // staff
 
 const App = () => {
   const [notifications, setNotifications] = useState([]);
@@ -100,6 +100,7 @@ const App = () => {
                 <Route path="/borrowing-requests" element={<BorrowingRequests />} />
                 <Route path="/returning-updates" element={<ReturningUpdates />} />
                 <Route path="/book-inventory" element={<BookInventory />} />
+                <Route path="/user-creation" element={<UserCreation />} />
                 <Route path="/profile" element={<Profile />} /> {/* Profile route */}
               </>
             )}
